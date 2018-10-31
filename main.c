@@ -1,23 +1,22 @@
-// main.c
-// Desenvolvido para a placa EK-TM4C1294XL
-// Verifica o estado da chave USR_SW2 e acende os LEDs 1 e 2 caso esteja pressionada
-// Prof. Guilherme Peron
+/**=============================================================================
+// keyboard4x4.s
+// Luís Henrique Beltrão Santana
+// 25/10/2018
+=============================================================================**/
 
 #include <stdint.h>
-
-void PLL_Init(void);
-void SysTick_Init(void);
-void SysTick_Wait1ms(uint32_t delay);
-void GPIO_Init(void);
-uint32_t PortJ_Input(void);
-void PortN_Output(uint32_t leds);
-
+#include "gpio.h"
+#include "utils.h"
 
 int main(void)
 {
+	//iniciando
 	PLL_Init();
 	SysTick_Init();
-	GPIO_Init();
+	//iniciando GPIO
+	uint32_t gpio = GPIO_PORTJ;
+	
+	void setRcgcgpio(gpio);
 	while (1)
 	{
         //Se a USR_SW2 estiver pressionada
