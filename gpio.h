@@ -10,6 +10,15 @@
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 
+#define P0 0x1
+#define P1 0x2
+#define P2 0x4
+#define P3 0x8
+#define P4 0x10
+#define P5 0x20
+#define P6 0x40
+#define P7 0x80
+
 #define A (0x10)
 #define B (0x20)
 #define C (0x30)
@@ -51,12 +60,12 @@ void GPIO_Init(void);
 /**
  *  1. Ativar o clock para a(s) porta(s) necessária(s)
 **/
-void setRcgcgpio(uint8_t port);
+void EnableGpio(uint32_t port);
 
 /**
  *  2. desativar modo analógico das portas
 **/
-void analogDisable(uint8_t port);
+void clearAmsel(uint8_t port);
 
 /**
  *  3. limpar PCTL
@@ -66,7 +75,7 @@ void analogDisable(uint8_t port);
 /**
  *  4. selecionar direção da porta [input | output]
 **/
- void ioEnable(uint8_t port, uint32_t value);
+ void ioDirection(uint8_t port, uint32_t value);
 
 /**
  *  5. selecionar GPIO sem função alternativa
@@ -90,4 +99,8 @@ void enablePullUp(uint8_t port, uint32_t value);
 uint32_t PortJ_Input(void);
 void PortN_Output(uint32_t valor);
 uint32_t PortC_Input(void);
+void PortN_Output(uint32_t valor);
+void PortK_Output(uint32_t valor);
+void PortL_Output(uint32_t valor);
+void PortM_Output(uint32_t valor);
 #endif

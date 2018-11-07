@@ -18,7 +18,7 @@ void EnableGpio(uint32_t value){
     while((SYSCTL_PRGPIO_R & value ) != value){};
 } 
 
-void analogDisable(uint8_t port){
+void clearAmsel(uint8_t port){
 	uint8_t temp;
 	switch(port){
 		case A: GPIO_PORTA_AHB_AMSEL_R = 0x00;
@@ -26,7 +26,7 @@ void analogDisable(uint8_t port){
 		case B: GPIO_PORTB_AHB_AMSEL_R = 0x00;
 				break;
 		case C: temp = GPIO_PORTC_AHB_AMSEL_R;
-				temp &= !(0xf0);
+				temp &= ~0xf0;
 				GPIO_PORTC_AHB_AMSEL_R = temp;
 				break;
 		case D: GPIO_PORTD_AHB_AMSEL_R = 0x00;
@@ -58,15 +58,12 @@ void analogDisable(uint8_t port){
 }
 	
 void clearPCTL(uint8_t port){
-	uint8_t temp;
 	switch(port){
 		case A: GPIO_PORTA_AHB_PCTL_R = 0x00;
 				break;
 		case B: GPIO_PORTB_AHB_PCTL_R = 0x00;
 				break;
-		case C: temp = GPIO_PORTC_AHB_PCTL_R;
-				temp &= !(0xffff0000);
-				GPIO_PORTC_AHB_PCTL_R = temp;
+		case C: GPIO_PORTC_AHB_PCTL_R = 0x1111;
 				break;
 		case D: GPIO_PORTD_AHB_PCTL_R = 0x00;
 				break;
@@ -96,7 +93,7 @@ void clearPCTL(uint8_t port){
 	}
 }
 
-void ioEnable(uint8_t port, uint32_t value){
+void ioDirection(uint8_t port, uint32_t value){
 	uint8_t temp;
 	switch(port){
 		case A: GPIO_PORTA_AHB_DIR_R = value;
@@ -104,8 +101,9 @@ void ioEnable(uint8_t port, uint32_t value){
 		case B: GPIO_PORTB_AHB_DIR_R = value;
 				break;
 		case C: temp = GPIO_PORTC_AHB_DIR_R;
-				value &= !(0x0f);
-				temp &= value;
+				value &= ~0x0f;
+				temp &= ~0xf0;
+				temp |= value;
 				GPIO_PORTC_AHB_DIR_R = temp;
 				break;
 		case D: GPIO_PORTD_AHB_DIR_R = value;
@@ -144,7 +142,7 @@ void clearAfsel(uint8_t port){
 		case B: GPIO_PORTB_AHB_AFSEL_R = 0x00;
 				break;
 		case C: temp = GPIO_PORTC_AHB_AFSEL_R;
-				temp &= !(0xf0);
+				temp &= ~0xf0;
 				GPIO_PORTC_AHB_AFSEL_R = temp;
 				break;
 		case D: GPIO_PORTD_AHB_AFSEL_R = 0x00;
@@ -183,8 +181,9 @@ void digitalEnable(uint8_t port,uint32_t value){
 		case B: GPIO_PORTB_AHB_DEN_R = value;
 				break;
 		case C: temp = GPIO_PORTC_AHB_DEN_R;
-				value &= !(0x0f);
-				temp &= value;
+				value &= ~0x0f;
+				temp &= ~0xf0;
+				temp |= value;
 				GPIO_PORTC_AHB_DEN_R = temp;
 				break;
 		case D: GPIO_PORTD_AHB_DEN_R = value;
@@ -223,8 +222,9 @@ void enablePullUp(uint8_t port, uint32_t value){
 		case B: GPIO_PORTB_AHB_PUR_R = value;
 				break;
 		case C: temp = GPIO_PORTC_AHB_PUR_R;
-				value &= !(0x0f);
-				temp &= value;
+				value &= ~0x0f;
+				temp &= ~0xf0;
+				temp |= value;
 				GPIO_PORTC_AHB_PUR_R = temp;
 				break;
 		case D: GPIO_PORTD_AHB_PUR_R = value;
@@ -262,10 +262,16 @@ void enablePullUp(uint8_t port, uint32_t value){
 // Parâmetro de saída: Não tem
 void GPIO_Init(void)
 {
+	uint32_t gpio = 0;
+	gpio |= GPIO_PORTC;
+	gpio |= GPIO_PORTK;
+	gpio |= GPIO_PORTL;
+	gpio |= GPIO_PORTM;
+	
 	//1a. Ativar o clock para a porta setando o bit correspondente no registrador RCGCGPIO
-	SYSCTL_RCGCGPIO_R |= GPIO_PORTJN;
+	SYSCTL_RCGCGPIO_R |= gpio;
 	//1b.   após isso verificar no PRGPIO se a porta está pronta para uso.
-	while((SYSCTL_PRGPIO_R & (GPIO_PORTJN) ) != (GPIO_PORTJN) ){};
+	while((SYSCTL_PRGPIO_R & (gpio) ) != (gpio) ){};
 	
 	// 2. Limpar o AMSEL para desabilitar a analógica
 	GPIO_PORTJ_AHB_AMSEL_R = 0x00;
@@ -304,32 +310,32 @@ uint32_t PortC_Input(void)
 void PortN_Output(uint32_t valor)
 {
     uint32_t temp;
-    temp = GPIO_PORTN_DATA_R & !0x3;
+    temp = GPIO_PORTN_DATA_R & ~0x3;
     temp = temp | valor;
     GPIO_PORTN_DATA_R = temp; 
 }
 
 void PortK_Output(uint32_t valor)
 {
-    GPIO_PORTN_DATA_R = valor; 
+    GPIO_PORTK_DATA_R = valor; 
 }
 
 void PortL_Output(uint32_t valor)
 {
     uint32_t temp;
-	valor &= !0xfffffff0;
-    temp = GPIO_PORTL_DATA_R & !0x0f;
+	valor &= ~0xfffffff0;
+    temp = GPIO_PORTL_DATA_R & ~0x0f;
     temp = temp | valor;
-    GPIO_PORTN_DATA_R = temp; 
+    GPIO_PORTL_DATA_R = temp; 
 }
 
 void PortM_Output(uint32_t valor)
 {
     uint32_t temp;
 	valor &= 0x07;
-    temp = GPIO_PORTL_DATA_R & !0x07;
+    temp = GPIO_PORTL_DATA_R & ~0x07;
     temp = temp | valor;
-    GPIO_PORTN_DATA_R = temp; 
+    GPIO_PORTM_DATA_R = temp; 
 }
 
 
