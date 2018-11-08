@@ -1,6 +1,6 @@
 /**=============================================================================
 // keyboard4x4.s
-// LuÌs Henrique Beltr„o Santana
+// Lu√≠s Henrique Beltr√£o Santana
 // 25/10/2018
 =============================================================================**/
 
@@ -59,6 +59,7 @@ int main(void)
 	digitalEnable(L,P0|P1|P2|P3);
 	digitalEnable(M,P0|P1|P2);
 	enablePullUp(C,P4|P5|P6|P7);
+	init_display(0);
 	
 	char u = 'x',v = ' ';
 	int i = 0;
@@ -104,17 +105,25 @@ int main(void)
 				}
 				break;
 			case KSM_OPENING:
+				clear_display(0);
+				print_message(0x80, "Cofre Abrindo ");
 				angle(-180);
 				ksm = KSM_OPEN;
 				break;
 			case KSM_OPEN:
+				clear_display(0);
+				print_message(0x80, "Cofre Aberto ");
 				locked = FALSE;
 				break;
 			case KSM_CLOSING:
+				clear_display(0);
+				print_message(0x80, "Cofre Fechando ");
 				angle(180);
 				ksm = KSM_CLOSE;
 				break;
 			case KSM_CLOSE:
+				clear_display(0);
+				print_message(0x80, "Cofre Fechado ");
 				locked = TRUE;
 				break;
 			case KSM_RESET:
