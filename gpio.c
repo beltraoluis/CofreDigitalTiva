@@ -320,6 +320,15 @@ void PortK_Output(uint32_t valor)
     GPIO_PORTK_DATA_R = valor; 
 }
 
+void PortH_Output(uint32_t valor)
+{
+    uint32_t temp;
+	valor &= ~0xfffffff0;
+    temp = GPIO_PORTH_AHB_DATA_R & ~0x0f;
+    temp = temp | valor;
+    GPIO_PORTH_AHB_DATA_R = temp;
+}
+
 void PortL_Output(uint32_t valor)
 {
     uint32_t temp;

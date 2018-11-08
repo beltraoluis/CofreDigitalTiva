@@ -98,10 +98,11 @@ void enablePullUp(uint8_t port, uint32_t value);
  *
 =============================================================================**/
 
+
+uint32_t PortC_Input(void);
 uint32_t PortJ_Input(void);
 void PortN_Output(uint32_t valor);
-uint32_t PortC_Input(void);
-void PortN_Output(uint32_t valor);
+void PortH_Output(uint32_t valor);
 void PortK_Output(uint32_t valor);
 void PortL_Output(uint32_t valor);
 void PortM_Output(uint32_t valor);

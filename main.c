@@ -53,6 +53,7 @@ int main(void)
 	clearAfsel(L);
 	clearAfsel(M);
 	digitalEnable(C,P4|P5|P6|P7);
+	digitalEnable(H,P0|P1|P2|P3);
 	digitalEnable(K,P_ALL);
 	digitalEnable(L,P0|P1|P2|P3);
 	digitalEnable(M,P0|P1|P2);
