@@ -5,6 +5,7 @@
 =============================================================================**/
 
 #include <stdint.h>
+#include <string.h>
 #include "gpio.h"
 #include "utils.h"
 #include "keyboard.h"
@@ -12,11 +13,19 @@
 #define KSM_RUN 0
 #define KSM_AQUISITION 1
 #define KSM_WRITE 2
-#define KSM_WAINT 3
+#define KSM_CHECK 3
 #define KSM_RESET 4
+#define KSM_CLOSE 5
+#define KSM_OPEN 6
+#define KSM_OPENING 7
+#define KSM_CLOSING 8
 
 int main(void)
 {
+	char key[16] = "";
+	char password[16] = "";
+	int pos = 0;
+	bool locked = FALSE;
 	//iniciando
 	PLL_Init();
 	SysTick_Init();
@@ -58,10 +67,42 @@ int main(void)
 				break;
 			case KSM_AQUISITION:
 				u = kb4x4(i++);
-				if(v == ' ') ksm = KSM_WRITE;
+				if(u == ' ') ksm = KSM_WRITE;
 				if(i > 3) i = 0;
 				break;
 			case KSM_WRITE:
+				if(v == '*'|| v == '#' || pos == 15){
+					password[pos] = '\0';
+					ksm = KSM_CHECK;
+				}
+				else{
+					password[pos++] = v;
+				}
+				break;
+			case KSM_CHECK:
+				if(locked){
+					if(strcmp(password,key) == 0){
+						ksm = KSM_OPENING;
+						strcpy(password,"");
+						strcpy(key,"");
+					}
+					else{
+						strcpy(password,"");
+						ksm = KSM_RESET;
+					}
+				}
+				else{
+					strcpy(key,password);
+					strcpy(password,"");
+				}
+				break;
+			case KSM_OPENING:
+				break;
+			case KSM_OPEN:
+				break;
+			case KSM_CLOSING:
+				break;
+			case KSM_CLOSE:
 				break;
 			case KSM_RESET:
 				v = ' ';
