@@ -2,20 +2,21 @@
 #include "keyboard.h"
 #include "gpio.h"
 #include "utils.h"
+#include "passMotor.h"
 
 void passControll(int v){
 	switch(v){
 		case 0:
-			PortL_Output(0xC);
+			PortH_Output(0xC);
 			break;
 		case 1:
-			PortL_Output(0x6);
+			PortH_Output(0x6);
 			break;
 		case 2:
-			PortL_Output(0x3);
+			PortH_Output(0x3);
 			break;
 		case 3:
-			PortL_Output(0x9);
+			PortH_Output(0x9);
 			break;
 		
 	}

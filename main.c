@@ -9,6 +9,7 @@
 #include "gpio.h"
 #include "utils.h"
 #include "keyboard.h"
+#include "passMotor.h"
 
 #define KSM_RUN 0
 #define KSM_AQUISITION 1
@@ -103,12 +104,14 @@ int main(void)
 				}
 				break;
 			case KSM_OPENING:
+				angle(-180);
 				ksm = KSM_OPEN;
 				break;
 			case KSM_OPEN:
 				locked = FALSE;
 				break;
 			case KSM_CLOSING:
+				angle(180);
 				ksm = KSM_CLOSE;
 				break;
 			case KSM_CLOSE:
