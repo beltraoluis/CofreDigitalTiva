@@ -15,7 +15,7 @@ char kb4x4(int ki){
 	uint32_t v1, v2;
 	PortL_Output(val[ki]);
 	v1 = PortC_Input() >> 4;
-	SysTick_Wait1ms(100);
+	SysTick_Wait1ms(300);
 	v2 = PortC_Input() >> 4;
 	v2 &= 0xF;
 	if(v1 == v2){

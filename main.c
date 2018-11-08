@@ -10,6 +10,7 @@
 #include "utils.h"
 #include "keyboard.h"
 #include "passMotor.h"
+#include "lcd_display.h"
 
 #define KSM_RUN 0
 #define KSM_AQUISITION 1
@@ -60,6 +61,8 @@ int main(void)
 	digitalEnable(M,P0|P1|P2);
 	enablePullUp(C,P4|P5|P6|P7);
 	init_display(0);
+	clear_display(0);
+	print_message(0x80, "Cofre Aberto ");
 	
 	char u = 'x',v = ' ';
 	int i = 0;
@@ -114,6 +117,7 @@ int main(void)
 				clear_display(0);
 				print_message(0x80, "Cofre Aberto ");
 				locked = FALSE;
+				ksm = KSM_RESET;
 				break;
 			case KSM_CLOSING:
 				clear_display(0);
@@ -125,6 +129,7 @@ int main(void)
 				clear_display(0);
 				print_message(0x80, "Cofre Fechado ");
 				locked = TRUE;
+				ksm = KSM_RESET;
 				break;
 			case KSM_RESET:
 				strcpy(password,"");
