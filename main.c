@@ -83,6 +83,7 @@ int main(void)
 				}
 				else{
 					password[pos++] = v;
+					ksm = KSM_RUN;
 				}
 				break;
 			case KSM_CHECK:
@@ -93,14 +94,13 @@ int main(void)
 						strcpy(password,"");
 						strcpy(key,"");
 					}
-					else{
-						strcpy(password,"");
-					}
 				}
 				else{
-					strcpy(key,password);
-					strcpy(password,"");
-					ksm = KSM_CLOSING;
+					if(v == '#'){
+						strcpy(key,password);
+						strcpy(password,"");
+						ksm = KSM_CLOSING;
+					}
 				}
 				break;
 			case KSM_OPENING:
@@ -118,6 +118,8 @@ int main(void)
 				locked = TRUE;
 				break;
 			case KSM_RESET:
+				strcpy(password,"");
+				pos = 0;
 				v = ' ';
 				u = '*';
 				i = 0;
