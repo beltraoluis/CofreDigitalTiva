@@ -18,6 +18,8 @@
 #define P5 0x20
 #define P6 0x40
 #define P7 0x80
+#define P_ALL 0xFF
+#define P_NONE 0x0
 
 #define A (0x10)
 #define B (0x20)

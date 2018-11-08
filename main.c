@@ -30,26 +30,30 @@ int main(void)
 	PLL_Init();
 	SysTick_Init();
 	uint32_t gpio = 
-		GPIO_PORTC | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
+		GPIO_PORTC | GPIO_PORTH | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
 	EnableGpio(gpio);
 	clearAmsel(C);
+	clearAmsel(H);
 	clearAmsel(K);
 	clearAmsel(L);
 	clearAmsel(M);
 	clearPCTL(C);
+	clearPCTL(H);
 	clearPCTL(K);
 	clearPCTL(L);
 	clearPCTL(M);
-	ioDirection(C,0x0);
-	ioDirection(K,0xFF);
+	ioDirection(C,P_NONE);
+	ioDirection(H, P0|P1|P2|P3);
+	ioDirection(K,P_ALL);
 	ioDirection(L,P0|P1|P2|P3);
 	ioDirection(M,P0|P1|P2);
 	clearAfsel(C);
+	clearAfsel(H);
 	clearAfsel(K);
 	clearAfsel(L);
 	clearAfsel(M);
 	digitalEnable(C,P4|P5|P6|P7);
-	digitalEnable(K,0xFF);
+	digitalEnable(K,P_ALL);
 	digitalEnable(L,P0|P1|P2|P3);
 	digitalEnable(M,P0|P1|P2);
 	enablePullUp(C,P4|P5|P6|P7);
@@ -80,6 +84,7 @@ int main(void)
 				}
 				break;
 			case KSM_CHECK:
+				ksm = KSM_RESET;
 				if(locked){
 					if(strcmp(password,key) == 0){
 						ksm = KSM_OPENING;
@@ -88,24 +93,29 @@ int main(void)
 					}
 					else{
 						strcpy(password,"");
-						ksm = KSM_RESET;
 					}
 				}
 				else{
 					strcpy(key,password);
 					strcpy(password,"");
+					ksm = KSM_CLOSING;
 				}
 				break;
 			case KSM_OPENING:
+				ksm = KSM_OPEN;
 				break;
 			case KSM_OPEN:
+				locked = FALSE;
 				break;
 			case KSM_CLOSING:
+				ksm = KSM_CLOSE;
 				break;
 			case KSM_CLOSE:
+				locked = TRUE;
 				break;
 			case KSM_RESET:
 				v = ' ';
+				u = '*';
 				i = 0;
 				ksm = KSM_RUN;
 				break;
