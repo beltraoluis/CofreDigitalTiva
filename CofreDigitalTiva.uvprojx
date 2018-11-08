@@ -431,6 +431,11 @@
               <FileType>1</FileType>
               <FilePath>.\passMotor.c</FilePath>
             </File>
+            <File>
+              <FileName>passMotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\passMotor.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

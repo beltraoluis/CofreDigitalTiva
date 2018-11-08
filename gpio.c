@@ -255,48 +255,6 @@ void enablePullUp(uint8_t port, uint32_t value){
 	}
 }
 
-//==============================================================================
-// Função GPIO_Init
-// Inicializa os ports J e N
-// Parâmetro de entrada: Não tem
-// Parâmetro de saída: Não tem
-void GPIO_Init(void)
-{
-	uint32_t gpio = 0;
-	gpio |= GPIO_PORTC;
-	gpio |= GPIO_PORTK;
-	gpio |= GPIO_PORTL;
-	gpio |= GPIO_PORTM;
-	
-	//1a. Ativar o clock para a porta setando o bit correspondente no registrador RCGCGPIO
-	SYSCTL_RCGCGPIO_R |= gpio;
-	//1b.   após isso verificar no PRGPIO se a porta está pronta para uso.
-	while((SYSCTL_PRGPIO_R & (gpio) ) != (gpio) ){};
-	
-	// 2. Limpar o AMSEL para desabilitar a analógica
-	GPIO_PORTJ_AHB_AMSEL_R = 0x00;
-	GPIO_PORTN_AMSEL_R = 0x00;
-		
-	// 3. Limpar PCTL para selecionar o GPIO
-	GPIO_PORTJ_AHB_PCTL_R = 0x00;
-	GPIO_PORTN_PCTL_R = 0x00;
-
-	// 4. DIR para 0 se for entrada, 1 se for saída
-	GPIO_PORTJ_AHB_DIR_R = 0x00;
-	GPIO_PORTN_DIR_R = 0x03; //BIT0 | BIT1
-		
-	// 5. Limpar os bits AFSEL para 0 para selecionar GPIO sem função alternativa	
-	GPIO_PORTJ_AHB_AFSEL_R = 0x00;
-	GPIO_PORTN_AFSEL_R = 0x00; 
-		
-	// 6. Setar os bits de DEN para habilitar I/O digital	
-	GPIO_PORTJ_AHB_DEN_R = 0x03;   //Bit0 e bit1
-	GPIO_PORTN_DEN_R = 0x03; 		   //Bit0 e bit1
-	
-	// 7. Habilitar resistor de pull-up interno, setar PUR para 1
-	GPIO_PORTJ_AHB_PUR_R = 0x03;   //Bit0 e bit1
-}
-
 uint32_t PortJ_Input(void)
 {
 	return GPIO_PORTJ_AHB_DATA_R;
@@ -318,6 +276,15 @@ void PortN_Output(uint32_t valor)
 void PortK_Output(uint32_t valor)
 {
     GPIO_PORTK_DATA_R = valor; 
+}
+
+void PortH_Output(uint32_t valor)
+{
+    uint32_t temp;
+	valor &= ~0xfffffff0;
+    temp = GPIO_PORTH_AHB_DATA_R & ~0x0f;
+    temp = temp | valor;
+    GPIO_PORTH_AHB_DATA_R = temp;
 }
 
 void PortL_Output(uint32_t valor)

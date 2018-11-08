@@ -18,6 +18,8 @@
 #define P5 0x20
 #define P6 0x40
 #define P7 0x80
+#define P_ALL 0xFF
+#define P_NONE 0x0
 
 #define A (0x10)
 #define B (0x20)
@@ -96,10 +98,11 @@ void enablePullUp(uint8_t port, uint32_t value);
  *
 =============================================================================**/
 
+
+uint32_t PortC_Input(void);
 uint32_t PortJ_Input(void);
 void PortN_Output(uint32_t valor);
-uint32_t PortC_Input(void);
-void PortN_Output(uint32_t valor);
+void PortH_Output(uint32_t valor);
 void PortK_Output(uint32_t valor);
 void PortL_Output(uint32_t valor);
 void PortM_Output(uint32_t valor);

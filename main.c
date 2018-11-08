@@ -9,6 +9,7 @@
 #include "gpio.h"
 #include "utils.h"
 #include "keyboard.h"
+#include "passMotor.h"
 
 #define KSM_RUN 0
 #define KSM_AQUISITION 1
@@ -30,26 +31,31 @@ int main(void)
 	PLL_Init();
 	SysTick_Init();
 	uint32_t gpio = 
-		GPIO_PORTC | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
+		GPIO_PORTC | GPIO_PORTH | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
 	EnableGpio(gpio);
 	clearAmsel(C);
+	clearAmsel(H);
 	clearAmsel(K);
 	clearAmsel(L);
 	clearAmsel(M);
 	clearPCTL(C);
+	clearPCTL(H);
 	clearPCTL(K);
 	clearPCTL(L);
 	clearPCTL(M);
-	ioDirection(C,0x0);
-	ioDirection(K,0xFF);
+	ioDirection(C,P_NONE);
+	ioDirection(H, P0|P1|P2|P3);
+	ioDirection(K,P_ALL);
 	ioDirection(L,P0|P1|P2|P3);
 	ioDirection(M,P0|P1|P2);
 	clearAfsel(C);
+	clearAfsel(H);
 	clearAfsel(K);
 	clearAfsel(L);
 	clearAfsel(M);
 	digitalEnable(C,P4|P5|P6|P7);
-	digitalEnable(K,0xFF);
+	digitalEnable(H,P0|P1|P2|P3);
+	digitalEnable(K,P_ALL);
 	digitalEnable(L,P0|P1|P2|P3);
 	digitalEnable(M,P0|P1|P2);
 	enablePullUp(C,P4|P5|P6|P7);
@@ -77,35 +83,45 @@ int main(void)
 				}
 				else{
 					password[pos++] = v;
+					ksm = KSM_RUN;
 				}
 				break;
 			case KSM_CHECK:
+				ksm = KSM_RESET;
 				if(locked){
 					if(strcmp(password,key) == 0){
 						ksm = KSM_OPENING;
 						strcpy(password,"");
 						strcpy(key,"");
 					}
-					else{
-						strcpy(password,"");
-						ksm = KSM_RESET;
-					}
 				}
 				else{
-					strcpy(key,password);
-					strcpy(password,"");
+					if(v == '#'){
+						strcpy(key,password);
+						strcpy(password,"");
+						ksm = KSM_CLOSING;
+					}
 				}
 				break;
 			case KSM_OPENING:
+				angle(-180);
+				ksm = KSM_OPEN;
 				break;
 			case KSM_OPEN:
+				locked = FALSE;
 				break;
 			case KSM_CLOSING:
+				angle(180);
+				ksm = KSM_CLOSE;
 				break;
 			case KSM_CLOSE:
+				locked = TRUE;
 				break;
 			case KSM_RESET:
+				strcpy(password,"");
+				pos = 0;
 				v = ' ';
+				u = '*';
 				i = 0;
 				ksm = KSM_RUN;
 				break;
