@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\CofreDigitalTiva.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\CofreDigitalTiva.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Nov 08 00:45:27 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Nov 20 22:19:30 2018
 <BR><P>
 <H3>Maximum Stack Usage =         96 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -19,9 +19,9 @@ Functions with no stack information
  <LI><a href="#[c1]">EndCritical</a>
  <LI><a href="#[c2]">WaitForInterrupt</a>
  <LI><a href="#[80]">__user_initial_stackheap</a>
- <LI><a href="#[8b]">PLL_Init</a>
- <LI><a href="#[8c]">SysTick_Init</a>
- <LI><a href="#[8a]">SysTick_Wait1ms</a>
+ <LI><a href="#[90]">PLL_Init</a>
+ <LI><a href="#[91]">SysTick_Init</a>
+ <LI><a href="#[8f]">SysTick_Wait1ms</a>
 </UL>
 </UL>
 <P>
@@ -661,16 +661,16 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[8b]"></a>PLL_Init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
+<P><STRONG><a name="[90]"></a>PLL_Init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8c]"></a>SysTick_Init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
+<P><STRONG><a name="[91]"></a>SysTick_Init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8a]"></a>SysTick_Wait1ms</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4
+<P><STRONG><a name="[8f]"></a>SysTick_Wait1ms</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, utils.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4i
 </UL>
 
 <P><STRONG><a name="[95]"></a>strcpy</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, strcpy.o(.text))
@@ -726,20 +726,20 @@ Global Symbols
 
 <P><STRONG><a name="[ca]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[8d]"></a>EnableGpio</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gpio.o(i.EnableGpio))
+<P><STRONG><a name="[92]"></a>EnableGpio</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gpio.o(i.EnableGpio))
 <BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[89]"></a>PortC_Input</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gpio.o(i.PortC_Input))
-<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4
+<P><STRONG><a name="[8e]"></a>PortC_Input</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gpio.o(i.PortC_Input))
+<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4i
 </UL>
 
 <P><STRONG><a name="[97]"></a>PortH_Output</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, gpio.o(i.PortH_Output))
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;passControll
 </UL>
 
-<P><STRONG><a name="[88]"></a>PortL_Output</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, gpio.o(i.PortL_Output))
-<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4
+<P><STRONG><a name="[8d]"></a>PortL_Output</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, gpio.o(i.PortL_Output))
+<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4i
 </UL>
 
 <P><STRONG><a name="[82]"></a>angle</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, passmotor.o(i.angle))
@@ -753,64 +753,65 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[91]"></a>clearAfsel</STRONG> (Thumb, 168 bytes, Stack size 0 bytes, gpio.o(i.clearAfsel))
-<BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[8a]"></a>clearAfsel</STRONG> (Thumb, 168 bytes, Stack size 0 bytes, gpio.o(i.clearAfsel))
+<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digital
 </UL>
 
-<P><STRONG><a name="[8e]"></a>clearAmsel</STRONG> (Thumb, 168 bytes, Stack size 0 bytes, gpio.o(i.clearAmsel))
-<BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[88]"></a>clearAmsel</STRONG> (Thumb, 168 bytes, Stack size 0 bytes, gpio.o(i.clearAmsel))
+<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digital
 </UL>
 
-<P><STRONG><a name="[8f]"></a>clearPCTL</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, gpio.o(i.clearPCTL))
-<BR><BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[89]"></a>clearPCTL</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, gpio.o(i.clearPCTL))
+<BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digital
 </UL>
 
-<P><STRONG><a name="[92]"></a>digitalEnable</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, gpio.o(i.digitalEnable))
+<P><STRONG><a name="[87]"></a>digital</STRONG> (Thumb, 34 bytes, Stack size 12 bytes, gpio.o(i.digital))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = digital &rArr; digitalEnable
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalEnable
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearPCTL
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearAmsel
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearAfsel
+</UL>
+<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[8b]"></a>digitalEnable</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, gpio.o(i.digitalEnable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = digitalEnable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digital
 </UL>
 
-<P><STRONG><a name="[93]"></a>enablePullUp</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, gpio.o(i.enablePullUp))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = enablePullUp
-</UL>
-<BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[90]"></a>ioDirection</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, gpio.o(i.ioDirection))
+<P><STRONG><a name="[93]"></a>ioDirection</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, gpio.o(i.ioDirection))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ioDirection
 </UL>
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[87]"></a>kb4x4</STRONG> (Thumb, 236 bytes, Stack size 24 bytes, keyboard.o(i.kb4x4))
+<P><STRONG><a name="[8c]"></a>kb4x4i</STRONG> (Thumb, 236 bytes, Stack size 24 bytes, keyboard.o(i.kb4x4i))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
-<LI>Call Chain = kb4x4
+<LI>Call Chain = kb4x4i
 </UL>
-<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortL_Output
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortC_Input
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Wait1ms
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortL_Output
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortC_Input
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Wait1ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 458 bytes, Stack size 32 bytes, main.o(i.main))
+<P><STRONG><a name="[79]"></a>main</STRONG> (Thumb, 396 bytes, Stack size 32 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96 + Unknown Stack Size
 <LI>Call Chain = main &rArr; angle &rArr; __aeabi_d2iz
 </UL>
 <BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ioDirection
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enablePullUp
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalEnable
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearPCTL
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearAmsel
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clearAfsel
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;kb4x4i
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ioDirection
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digital
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;angle
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableGpio
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableGpio
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>

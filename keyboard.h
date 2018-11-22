@@ -10,5 +10,6 @@
 #include <stdint.h>
 
 char kb4x4(int ki);
+char kb4x4i(int ki);
 
 #endif

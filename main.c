@@ -33,48 +33,34 @@ int main(void)
 	uint32_t gpio = 
 		GPIO_PORTC | GPIO_PORTH | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
 	EnableGpio(gpio);
-	clearAmsel(C);
-	clearAmsel(H);
-	clearAmsel(K);
-	clearAmsel(L);
-	clearAmsel(M);
-	clearPCTL(C);
-	clearPCTL(H);
-	clearPCTL(K);
-	clearPCTL(L);
-	clearPCTL(M);
-	ioDirection(C,P_NONE);
-	ioDirection(H, P0|P1|P2|P3);
-	ioDirection(K,P_ALL);
+	ioDirection(C,INPUT);
+	ioDirection(H,P0|P1|P2|P3);
+	ioDirection(K,OUTPUT);
 	ioDirection(L,P0|P1|P2|P3);
 	ioDirection(M,P0|P1|P2);
-	clearAfsel(C);
-	clearAfsel(H);
-	clearAfsel(K);
-	clearAfsel(L);
-	clearAfsel(M);
-	digitalEnable(C,P4|P5|P6|P7);
-	digitalEnable(H,P0|P1|P2|P3);
-	digitalEnable(K,P_ALL);
-	digitalEnable(L,P0|P1|P2|P3);
-	digitalEnable(M,P0|P1|P2);
+	digital(C,P4|P5|P6|P7);
+	digital(H,P0|P1|P2|P3);
+	digital(K,P_ALL);
+	digital(L,P0|P1|P2|P3);
+	digital(M,P0|P1|P2);
 	enablePullUp(C,P4|P5|P6|P7);
 	
 	char u = 'x',v = ' ';
 	int i = 0;
+	int j = 0;
 	int ksm = 0;
 	while (1)
 	{
 		switch(ksm){
 			case KSM_RUN:
-				v = kb4x4(i++);
+				v = kb4x4i(i++);
 				if(v != ' ') ksm = KSM_AQUISITION;
 				if(i > 3) i = 0;
 				break;
 			case KSM_AQUISITION:
-				u = kb4x4(i++);
+				u = kb4x4i(j++);
 				if(u == ' ') ksm = KSM_WRITE;
-				if(i > 3) i = 0;
+				if(j > 3) j = 0;
 				break;
 			case KSM_WRITE:
 				if(v == '*'|| v == '#' || pos == 15){

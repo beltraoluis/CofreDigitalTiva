@@ -20,6 +20,8 @@
 #define P7 0x80
 #define P_ALL 0xFF
 #define P_NONE 0x0
+#define OUTPUT 0xFF
+#define INPUT 0x0
 
 #define A (0x10)
 #define B (0x20)
@@ -68,6 +70,7 @@ void EnableGpio(uint32_t port);
  *  2. desativar modo analógico das portas
 **/
 void clearAmsel(uint8_t port);
+void setAmsel(uint8_t port, uint32_t value);
 
 /**
  *  3. limpar PCTL
@@ -94,6 +97,7 @@ void digitalEnable(uint8_t port, uint32_t value);
 **/
 void enablePullUp(uint8_t port, uint32_t value);
 
+void digital(uint8_t port, uint32_t value);
 /**=============================================================================
  *
 =============================================================================**/

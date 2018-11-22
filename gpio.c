@@ -56,6 +56,47 @@ void clearAmsel(uint8_t port){
 		default: break;
 	}
 }
+
+void setAmsel(uint8_t port, uint32_t value){
+	uint8_t temp;
+	switch(port){
+		case A: GPIO_PORTA_AHB_AMSEL_R = value;
+				break;
+		case B: GPIO_PORTB_AHB_AMSEL_R = value;
+				break;
+		case C: temp = GPIO_PORTC_AHB_AMSEL_R;
+				value &= ~0x0f;
+				temp &= ~0xf0;
+				temp |= value;
+				GPIO_PORTC_AHB_AMSEL_R = temp;
+				break;
+		case D: GPIO_PORTD_AHB_AMSEL_R = value;
+				break;
+		case E: GPIO_PORTE_AHB_AMSEL_R = value;
+				break;
+		case F: GPIO_PORTF_AHB_AMSEL_R = value;
+				break;
+		case G: GPIO_PORTG_AHB_AMSEL_R = value;
+				break;
+		case H: GPIO_PORTH_AHB_AMSEL_R = value;
+				break;
+		case J: GPIO_PORTJ_AHB_AMSEL_R = value;
+				break;
+		case K: GPIO_PORTK_AMSEL_R = value;
+				break;
+		case L: GPIO_PORTL_AMSEL_R = value;
+				break;
+		case M: GPIO_PORTM_AMSEL_R = value;
+				break;
+		case N: GPIO_PORTN_AMSEL_R = value;
+				break;
+		case P: GPIO_PORTP_AMSEL_R = value;
+				break;
+		case Q: GPIO_PORTQ_AMSEL_R = value;
+				break;
+		default: break;
+	}
+}
 	
 void clearPCTL(uint8_t port){
 	switch(port){
@@ -173,6 +214,85 @@ void clearAfsel(uint8_t port){
 	}
 }
 
+void setAfsel(uint8_t port,uint32_t value){
+	uint8_t temp;
+	switch(port){
+		case A: GPIO_PORTA_AHB_AFSEL_R = value;
+				break;
+		case B: GPIO_PORTB_AHB_AFSEL_R = value;
+				break;
+		case C: temp = GPIO_PORTC_AHB_AFSEL_R;
+				value &= ~0x0f;
+				temp &= ~0xf0;
+				temp |= value;
+				GPIO_PORTC_AHB_AFSEL_R = temp;
+				break;
+		case D: GPIO_PORTD_AHB_AFSEL_R = value;
+				break;
+		case E: GPIO_PORTE_AHB_AFSEL_R = value;
+				break;
+		case F: GPIO_PORTF_AHB_AFSEL_R = value;
+				break;
+		case G: GPIO_PORTG_AHB_AFSEL_R = value;
+				break;
+		case H: GPIO_PORTH_AHB_AFSEL_R = value;
+				break;
+		case J: GPIO_PORTJ_AHB_AFSEL_R = value;
+				break;
+		case K: GPIO_PORTK_AFSEL_R = value;
+				break;
+		case L: GPIO_PORTL_AFSEL_R = value;
+				break;
+		case M: GPIO_PORTM_AFSEL_R = value;
+				break;
+		case N: GPIO_PORTN_AFSEL_R = value;
+				break;
+		case P: GPIO_PORTP_AFSEL_R = value;
+				break;
+		case Q: GPIO_PORTQ_AFSEL_R = value;
+				break;
+		default: break;
+	}
+}
+void clearDigital(uint8_t port){
+	uint8_t temp;
+	switch(port){
+		case A: GPIO_PORTA_AHB_DEN_R = 0x00;
+				break;
+		case B: GPIO_PORTB_AHB_DEN_R = 0x00;
+				break;
+		case C: temp = GPIO_PORTC_AHB_DEN_R;
+				temp &= ~0xf0;
+				GPIO_PORTC_AHB_DEN_R = 0x00;
+				break;
+		case D: GPIO_PORTD_AHB_DEN_R = 0x00;
+				break;
+		case E: GPIO_PORTE_AHB_DEN_R = 0x00;
+				break;
+		case F: GPIO_PORTF_AHB_DEN_R = 0x00;
+				break;
+		case G: GPIO_PORTG_AHB_DEN_R = 0x00e;
+				break;
+		case H: GPIO_PORTH_AHB_DEN_R = 0x00;
+				break;
+		case J: GPIO_PORTJ_AHB_DEN_R = 0x00;
+				break;
+		case K: GPIO_PORTK_DEN_R = 0x00;
+				break;
+		case L: GPIO_PORTL_DEN_R = 0x00;
+				break;
+		case M: GPIO_PORTM_DEN_R = 0x00;
+				break;
+		case N: GPIO_PORTN_DEN_R = 0x00;
+				break;
+		case P: GPIO_PORTP_DEN_R = 0x00;
+				break;
+		case Q: GPIO_PORTQ_DEN_R = 0x00;
+				break;
+		default: break;
+	}
+}
+
 void digitalEnable(uint8_t port,uint32_t value){
 	uint8_t temp;
 	switch(port){
@@ -253,6 +373,20 @@ void enablePullUp(uint8_t port, uint32_t value){
 				break;
 		default: break;
 	}
+}
+
+void digital(uint8_t port, uint32_t value){
+	clearAmsel(port);
+	clearPCTL(port);
+	clearAfsel(port);
+	digitalEnable(port,value);
+}
+
+void analog(uint8_t port, uint32_t value){
+	setAmsel(port,value);
+	setAfsel(port,value);
+	clearPCTL(port);
+	clearDigital(port)
 }
 
 uint32_t PortJ_Input(void)
