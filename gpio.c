@@ -13,10 +13,16 @@
 /** A funcao SYSCTL_RCGCGPIO habilita o modo gpio para as portas selecionadas
   * @param: port e os bits que representam cada uma das portas 
 **/
-void EnableGpio(uint32_t value){
+void enableGpio(uint32_t value){
     SYSCTL_RCGCGPIO_R |= value;
     while((SYSCTL_PRGPIO_R & value ) != value){};
 } 
+
+
+void enableAdc(uint32_t adc){
+	SYSCTL_RCGCADC_R |= adc;
+  while((SYSCTL_PRGPIO_R & adc ) != adc){};
+}
 
 void clearAmsel(uint8_t port){
 	uint8_t temp;
@@ -382,11 +388,10 @@ void digital(uint8_t port, uint32_t value){
 	digitalEnable(port,value);
 }
 
-void analog(uint8_t port, uint32_t value){
+void analog(uint32_t adc, uint8_t port, uint32_t value){
 	setAmsel(port,value);
 	setAfsel(port,value);
-	clearPCTL(port);
-	clearDigital(port)
+	clearDigital(port);
 }
 
 uint32_t PortJ_Input(void)

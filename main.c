@@ -32,7 +32,8 @@ int main(void)
 	SysTick_Init();
 	uint32_t gpio = 
 		GPIO_PORTC | GPIO_PORTH | GPIO_PORTK | GPIO_PORTL | GPIO_PORTM;
-	EnableGpio(gpio);
+	enableGpio(gpio);
+	enableAdc(ADC0);
 	ioDirection(C,INPUT);
 	ioDirection(H,P0|P1|P2|P3);
 	ioDirection(K,OUTPUT);

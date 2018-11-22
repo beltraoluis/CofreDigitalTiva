@@ -10,6 +10,9 @@
 #include <stdint.h>
 #include "tm4c1294ncpdt.h"
 
+#define ADC0 = 0x1
+#define ADC1 = 0x2
+
 #define P0 0x1
 #define P1 0x2
 #define P2 0x4
@@ -61,42 +64,15 @@ void GPIO_Init(void);
  *	Funções de inicialização para configurar as GPIOs
 =============================================================================**/
 
-/**
- *  1. Ativar o clock para a(s) porta(s) necessária(s)
-**/
-void EnableGpio(uint32_t port);
-
-/**
- *  2. desativar modo analógico das portas
-**/
+void enableGpio(uint32_t port);
+void enableAdc(uint32_t adc);
 void clearAmsel(uint8_t port);
 void setAmsel(uint8_t port, uint32_t value);
-
-/**
- *  3. limpar PCTL
-**/
- void clearPCTL(uint8_t port);
-
-/**
- *  4. selecionar direção da porta [input | output]
-**/
- void ioDirection(uint8_t port, uint32_t value);
-
-/**
- *  5. selecionar GPIO sem função alternativa
-**/
- void clearAfsel(uint8_t port);
-
-/**
-  *  6. habilitar a porta como digital
- **/
+void clearPCTL(uint8_t port);
+void ioDirection(uint8_t port, uint32_t value);
+void clearAfsel(uint8_t port);
 void digitalEnable(uint8_t port, uint32_t value);
-
-/**
- *  7. habilita o resistor de Pull Up
-**/
 void enablePullUp(uint8_t port, uint32_t value);
-
 void digital(uint8_t port, uint32_t value);
 /**=============================================================================
  *
